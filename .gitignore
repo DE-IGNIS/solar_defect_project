@@ -1,0 +1,68 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+/solar-ml-env/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Datasets - never commit raw data
+data/
+!data/.gitkeep
+
+# Model weights and checkpoints
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+*.h5
+*.hdf5
+*.engine
+
+# Training outputs
+runs/
+wandb/
+mlruns/
+lightning_logs/
+
+# Generated results (keep directory structure)
+results/figures/*
+results/metrics/*
+results/weights/*
+!results/figures/.gitkeep
+!results/metrics/.gitkeep
+!results/weights/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# OS and editor files
+.DS_Store
+._*
+Thumbs.db
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
