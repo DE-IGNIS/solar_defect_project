@@ -1,23 +1,36 @@
-Step 1: Fork and clone
-On GitHub, teammates should open your repository and click Fork.
+## Getting Started
 
-Then:
-git clone https://github.com/TEAM-USERNAME/solar_defect_project.git
+### 1. Fork and Clone the Repository
 
+1. Open this repository on GitHub and click **Fork**.
+2. Clone your fork and navigate into the project directory:
+
+```bash
+git clone [https://github.com/TEAM-USERNAME/solar_defect_project.git](https://github.com/TEAM-USERNAME/solar_defect_project.git)
 cd solar_defect_project
+```
 
+> Replace `TEAM-USERNAME` with your GitHub username.
 
-Replace TEAM-USERNAME with the fork owner's GitHub username.
-Step 2: Create a Python environment
-Ubuntu/Linux:
+---
+
+### 2. Create a Python Environment
+
+**Ubuntu / Linux:**
+
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
-
 python -m pip install --upgrade pip
+```
 
+---
 
-Step 3: Install dependencies
-Create requirements.txt with the project's non-PyTorch dependencies, for example:
+### 3. Install Dependencies
+
+Ensure `requirements.txt` contains the project's non-PyTorch dependencies:
+
+```text
 numpy
 pandas
 matplotlib
@@ -25,45 +38,64 @@ opencv-python
 scikit-learn
 pillow
 pvlib
+```
 
+Install them with:
 
-Install them:
+```bash
 python -m pip install -r requirements.txt
+```
 
+Install **PyTorch** and **torchvision** separately using the official [PyTorch installation selector](https://pytorch.org/get-started/locally/) based on your operating system and GPU/CUDA setup. This avoids forcing a specific CUDA build onto incompatible hardware.
 
-Install PyTorch and torchvision separately using the official PyTorch installation selector, according to the teammate's operating system and GPU/CUDA requirements:
-PyTorch installation instructionsThis avoids forcing your particular CUDA build onto teammates with different hardware.
-Step 4: Download the dataset
-The dataset is publicly available from:
-Raptor Maps – InfraredSolarModulesTeammates should download and extract it into the directory expected by src/config.py.
+---
 
-Then verify:
-- module_metadata.json exists.
-- The images directory exists.
-- The image paths in the CSV splits resolve correctly.
-- There are 20,000 images and 12 classes.
-They should use your committed CSV splits rather than generating new ones, so their experiments remain comparable.
-Step 5: Test the trained model
-Once the dataset and checkpoints are available:
+### 4. Download the Dataset
+
+Download the dataset from [Raptor Maps – InfraredSolarModules](https://github.com/RaptorMaps/InfraredSolarModules) and extract it into the directory configured in `src/config.py`.
+
+Verify the following before running any scripts:
+- [ ] `module_metadata.json` exists.
+- [ ] The `images` directory exists.
+- [ ] Image paths in the CSV splits resolve correctly.
+- [ ] The dataset contains **20,000 images** across **12 classes**.
+
+> **Note:** Use the committed CSV splits rather than generating new ones so that all experiments remain directly comparable.
+
+---
+
+### 5. Evaluate the Trained Model
+
+Once the dataset and model checkpoints are in place, run evaluation on the test split to generate classification reports and confusion matrices:
+
+```bash
 python -m src.evaluate
+```
 
+To regenerate the training plots:
 
-This runs evaluation on the test split and generates classification reports and confusion matrices.
-
-To regenerate training plots:
+```bash
 python -m src.plot_training
+```
 
+---
 
-Step 6: Train models themselves (optional)
-If teammates want to reproduce the training:
+### 6. Train the Models (Optional)
+
+To reproduce training from scratch:
+
+```bash
 python -m src.train
+```
 
+This trains both the **RAW** and **CLAHE** models. Training time depends on your hardware and will be considerably slower on CPU-only machines.
 
-This trains both RAW and CLAHE models. They should expect different training times depending on their hardware.
+---
 
-For a CPU-only machine, training may be considerably slower.
-Step 7: Run the energy-loss estimator
+### 7. Run the Energy-Loss Estimator
+
+Generate the energy-loss CSV and visualizations using the project's assumptions and `pvlib` calculations:
+
+```bash
 python -m src.loss_estimator
-
-
-This generates the energy-loss CSV and visualization using the project's assumptions and pvlib calculations.
+```
