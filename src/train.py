@@ -67,14 +67,18 @@ def create_loaders(use_clahe):
 
 
 def calculate_class_weights(dataset):
-    labels = dataset.data["y"].astype(int).values
+    counts = (
+        dataset.data["y"]
+        .value_counts()
+        .sort_index()
+        .values
+    )
 
-    counts = torch.bincount(
-        torch.tensor(labels),
-        minlength=NUM_CLASSES,
-    ).float()
+    counts = torch.tensor(counts, dtype=torch.float32)
 
-    weights = counts.sum() / (NUM_CLASSES * counts.clamp(min=1))
+    weights = torch.sqrt(
+        counts.sum() / (NUM_CLASSES * counts.clamp(min=1))
+    )
 
     return weights.to(DEVICE)
 
